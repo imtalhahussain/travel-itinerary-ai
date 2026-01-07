@@ -1,10 +1,21 @@
 from app.llm.groq_client import llm
+import json
 
 def stay_agent(state):
     prompt = f"""
-    Suggest accommodation options in {state['request']['destination']}
-    for a {state['request']['budget']} budget.
+    You are an accommodation planner.
+
+    Return STRICT JSON only:
+    {{
+      "type": "hotel/hostel/homestay",
+      "area": "recommended area",
+      "price_range": "low/moderate/high"
+    }}
+
+    Destination: {state['request']['destination']}
+    Budget: {state['request']['budget']}
     """
-    result = llm.invoke(prompt).content
-    state["stay"] = {"details": result}
+
+    response = llm.invoke(prompt).content
+    state["stay"] = json.loads(response)
     return state
