@@ -1,10 +1,19 @@
 from app.llm.groq_client import llm
+import json
 
 def food_agent(state):
     prompt = f"""
-    Recommend local food places in {state['request']['destination']}
-    suitable for budget {state['request']['budget']}.
+    You are a food recommendation agent.
+
+    Return STRICT JSON only:
+    {{
+      "food_places": ["place 1", "place 2"]
+    }}
+
+    Destination: {state['request']['destination']}
+    Budget: {state['request']['budget']}
     """
-    result = llm.invoke(prompt).content
-    state["food"] = {"details": result}
+
+    response = llm.invoke(prompt).content
+    state["food"] = json.loads(response)
     return state
