@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
+
 
 class TravelRequest(BaseModel):
     origin: str
@@ -8,12 +9,14 @@ class TravelRequest(BaseModel):
     budget: str
     interests: List[str]
 
+
 class DayPlan(BaseModel):
     day: int
+    transport: Dict[str, Any]
+    stay: Dict[str, Any]
     activities: List[str]
-    transport: str
     food: List[str]
-    stay: Optional[str]
+
 
 class ItineraryResponse(BaseModel):
     destination: str
