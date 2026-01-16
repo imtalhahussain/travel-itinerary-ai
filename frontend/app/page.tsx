@@ -1,5 +1,7 @@
-import Hero from "@/components/Hero";
-import PlannerForm from "@/components/PlannerForm";
+"use client";
+
+import Hero from "../components/Hero";
+import PlannerForm from "../components/PlannerForm";
 
 export default function Home() {
   return (
