@@ -1,13 +1,7 @@
 "use client";
 
-import Hero from "../components/Hero";
-import PlannerForm from "../components/PlannerForm";
+import AppShell from "@/components/AppShell";
 
-export default function Home() {
-  return (
-    <main className="px-10 py-16 max-w-7xl mx-auto">
-      <Hero />
-      <PlannerForm />
-    </main>
-  );
+export default function Page() {
+  return <AppShell />;
 }
