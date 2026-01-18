@@ -8,7 +8,7 @@ app = FastAPI(title="Multi-Agent Travel Planner")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -18,19 +18,26 @@ graph = build_graph()
 
 @app.post("/plan", response_model=ItineraryResponse)
 def plan_trip(req: TravelRequest):
-    state = {
-        "request": req.dict(),
-        "transport": {},
-        "stay": {},
-        "activities": {},
-        "food": {},
-        "itinerary": []
-    }
+    try:
+        state = {
+            "request": req.dict(),
+            "transport": {},
+            "stay": {},
+            "activities": {},
+            "food": {},
+            "itinerary": []
+        }
 
-    result = graph.invoke(state)
+        result = graph.invoke(state)
 
-    return {
-        "destination": req.destination,
-        "total_days": req.days,
-        "plan": result["itinerary"]
-    }
+        return {
+            "destination": req.destination,
+            "total_days": req.days,
+            "plan": result["itinerary"]
+        }
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        # For debugging purposes, return 500 but print to console
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail=str(e))
