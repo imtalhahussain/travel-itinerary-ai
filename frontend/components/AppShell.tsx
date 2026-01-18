@@ -1,10 +1,13 @@
 "use client";
 
+import { useMemo, useState } from "react";
+
 import TopBar from "@/components/TopBar";
 import Sidebar from "@/components/Sidebar";
 import ChatPanel, { ChatMessage } from "@/components/ChatPanel";
 import TripPreview from "@/components/TripPreview";
 import { buildMockAssistantResponse, initialMockTrips } from "@/components/mockData";
+
 
 
 export default function AppShell() {
