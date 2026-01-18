@@ -1,14 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-
+import { motion } from "framer-motion";
 import TopBar from "@/components/TopBar";
 import Sidebar from "@/components/Sidebar";
 import ChatPanel, { ChatMessage } from "@/components/ChatPanel";
 import TripPreview from "@/components/TripPreview";
 import { buildMockAssistantResponse, initialMockTrips } from "@/components/mockData";
-
-
 
 export default function AppShell() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -16,10 +14,9 @@ export default function AppShell() {
   const [activeTripId, setActiveTripId] = useState(() => trips?.[1]?.id ?? trips?.[0]?.id ?? "t1");
 
   const activeTrip = useMemo(
-  () => trips?.find((t) => t.id === activeTripId) ?? trips?.[0],
-  [trips, activeTripId]
-    );
-
+    () => trips?.find((t) => t.id === activeTripId) ?? trips?.[0],
+    [trips, activeTripId]
+  );
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -74,12 +71,18 @@ export default function AppShell() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <TopBar onToggleSidebar={() => setSidebarOpen((s) => !s)} />
 
-      <div className="mx-auto max-w-[1400px] px-4 lg:px-6 pt-4 pb-6">
-        <div className="grid grid-cols-12 gap-4">
-          <div className={`${sidebarOpen ? "col-span-12 lg:col-span-3" : "hidden lg:block lg:col-span-1"}`}>
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="flex-1 mx-auto w-full max-w-[1700px] px-4 lg:px-6 pt-2 pb-6"
+      >
+        <div className="grid grid-cols-12 gap-5 h-[calc(100vh-100px)]">
+          {/* Sidebar */}
+          <div className={`${sidebarOpen ? "col-span-12 lg:col-span-3 xl:col-span-2" : "hidden lg:block lg:col-span-1"} transition-all duration-300 ease-in-out`}>
             <Sidebar
               open={sidebarOpen}
               trips={trips}
@@ -89,7 +92,8 @@ export default function AppShell() {
             />
           </div>
 
-          <div className={`${sidebarOpen ? "col-span-12 lg:col-span-6" : "col-span-12 lg:col-span-7"}`}>
+          {/* Chat Panel */}
+          <div className={`${sidebarOpen ? "col-span-12 lg:col-span-6 xl:col-span-7" : "col-span-12 lg:col-span-8"} transition-all duration-300 ease-in-out`}>
             <ChatPanel
               trip={activeTrip}
               messages={messages}
@@ -97,11 +101,12 @@ export default function AppShell() {
             />
           </div>
 
-          <div className="col-span-12 lg:col-span-3">
+          {/* Trip Preview */}
+          <div className="col-span-12 lg:col-span-3 hidden lg:block">
             <TripPreview trip={activeTrip} />
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
