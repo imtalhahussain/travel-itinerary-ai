@@ -1,7 +1,11 @@
 "use client";
 
-import AppShell from "@/components/AppShell";
+import PlannerForm from "@/components/PlannerForm";
 
 export default function Page() {
-  return <AppShell />;
+  return (
+    <main>
+      <PlannerForm />
+    </main>
+  );
 }

@@ -1,86 +1,87 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 
-:root { color-scheme: light; }
-html, body { height: 100%; }
+@import "tailwindcss";
 
-body {
-  margin: 0;
-  color: #0a0a0a;
-  background:
-    radial-gradient(1200px 700px at 20% -10%, rgba(79,70,229,0.10), transparent 60%),
-    radial-gradient(900px 600px at 90% 0%, rgba(124,58,237,0.10), transparent 55%),
-    #fafafa;
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-secondary: #f8fafc;
+
+  --color-muted: #64748b;
+  --color-muted-foreground: #94a3b8;
+
+  --color-accent: #f1f5f9;
+  --color-accent-foreground: #0f172a;
+
+  --color-border: #e2e8f0;
+  --color-input: #e2e8f0;
+  --color-ring: #94a3b8;
+
+  --radius-xl: 1rem;
 }
 
-* { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    background-image:
+      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.05) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
 
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 999px; }
-::-webkit-scrollbar-track { background: transparent; }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+  }
 
-/* ---- reusable UI classes (NO @apply) ---- */
-.glass {
-  background: rgba(255,255,255,0.72);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(228,228,231,0.9);
+  * {
+    border-color: var(--color-border);
+  }
 }
 
-.card {
-  border-radius: 16px;
-  background: rgba(255,255,255,0.72);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(228,228,231,0.9);
-  box-shadow: 0 18px 45px -25px rgba(0,0,0,0.45);
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border-radius: 12px;
-  padding: 8px 14px;
-  font-size: 14px;
-  font-weight: 500;
-  border: 1px solid rgba(228,228,231,1);
-  background: white;
-  transition: background 120ms ease, transform 120ms ease;
+.animate-in {
+  animation: animate-in 0.5s ease-out forwards;
 }
-.btn:hover { background: rgba(244,244,245,1); }
-.btn:active { transform: scale(0.99); }
+
+@keyframes animate-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-linear-to-r from-indigo-600 to-purple-600;
+}
 
 .btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border-radius: 12px;
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  color: white;
-  border: none;
-  box-shadow: 0 8px 18px -12px rgba(0,0,0,0.5);
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
-  transition: filter 120ms ease, transform 120ms ease;
+  @apply bg-indigo-600 text-white hover:bg-indigo-700 transition-all duration-200 px-6 py-3 rounded-xl font-semibold shadow-lg shadow-indigo-200 hover:shadow-indigo-300 active:scale-95;
 }
-.btn-primary:hover { filter: brightness(1.03); }
-.btn-primary:active { transform: scale(0.99); }
 
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border-radius: 999px;
-  border: 1px solid rgba(228,228,231,1);
-  background: rgba(255,255,255,0.80);
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(63,63,70,1);
-  transition: background 120ms ease;
+.input-field {
+  @apply w-full px-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-200;
 }
-.chip:hover { background: white; }
