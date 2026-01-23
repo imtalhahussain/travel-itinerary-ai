@@ -6,6 +6,8 @@ The system converts user constraints (destination, duration, budget, interests) 
 
 ---
 
+---
+
 ## 🚀 Architecture Overview
 
 - **Planner (Coordinator Agent)**  
